@@ -1,13 +1,13 @@
 import {
-  type ReturnCallback,
-  type AsyncReturnCallback,
+  type Callback,
+  type CallbackSync,
   type FallbackCallback,
-  type AsyncFallbackCallback,
+  type FallbackCallbackSync,
 } from './types';
 
 export async function fallback<T>(
-  callback: AsyncReturnCallback<T>,
-  fallback: AsyncFallbackCallback<T>,
+  callback: Callback<T>,
+  fallback: FallbackCallback<T>,
 ): Promise<T> {
   try {
     return await callback();
@@ -17,8 +17,8 @@ export async function fallback<T>(
 }
 
 export function fallbackSync<T>(
-  callback: ReturnCallback<T>,
-  fallback: FallbackCallback<T>,
+  callback: CallbackSync<T>,
+  fallback: FallbackCallbackSync<T>,
 ): T {
   try {
     return callback();

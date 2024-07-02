@@ -1,12 +1,12 @@
-import { type AsyncCallback, type AsyncReturnCallback } from './types';
+import { type Callback } from './types';
 import { caught } from './caught';
 
 export async function anyway<T>(
-  callback: AsyncReturnCallback<T>,
-  destroy: AsyncCallback,
+  callback: Callback<T>,
+  cleanup: Callback,
 ): Promise<T> {
-  const result = await caught(callback, destroy);
-  await destroy();
+  const result = await caught(callback, cleanup);
+  await cleanup();
   
   return result;
 }

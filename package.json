@@ -1,6 +1,6 @@
 {
   "name": "ominous",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "",
   "keywords": [],
   "bugs": "https://github.com/yaroslav-korotaev/ominous/issues",
@@ -15,6 +15,9 @@
   "repository": "yaroslav-korotaev/ominous",
   "scripts": {
     "build": "tsc"
+  },
+  "dependencies": {
+    "eventemitter3": "^5.0.1"
   },
   "devDependencies": {
     "@types/node": "^20.12.7",

@@ -1,18 +1,15 @@
-import { type CollectUseCallback, collect } from './collect';
+import { type Teardown, type UseSpawnCallback } from './types';
+import { caught } from './caught';
+import { Container } from './container';
 
-export type SetupCallback<T> = (use: CollectUseCallback) => Promise<T>;
+export type SetupCallback<T> = (use: UseSpawnCallback, teardown: Teardown) => Promise<T>;
 
 export async function setup<T>(callback: SetupCallback<T>): Promise<T> {
-  return await collect(async (use, _) => {
-    return await callback(use);
-  });
-}
-
-export async function autodestroy<T>(callback: SetupCallback<T>): Promise<T> {
-  return await collect(async (use, destroy) => {
-    const result = await callback(use);
-    await destroy();
-    
-    return result;
-  });
+  const container = new Container();
+  const use: UseSpawnCallback = async spawn => await container.use(spawn);
+  const teardown = async () => await container.destroy();
+  
+  return await caught(async () => {
+    return await callback(use, teardown);
+  }, teardown);
 }

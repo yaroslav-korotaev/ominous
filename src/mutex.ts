@@ -1,7 +1,7 @@
-import { type AsyncCallback } from './types';
+import { type Callback } from './types';
 
 export class Mutex {
-  private _queue: AsyncCallback[];
+  private _queue: Callback[];
   private _busy: boolean;
   
   constructor() {
@@ -21,7 +21,7 @@ export class Mutex {
     callback().then(this._next);
   }
   
-  public async lock(callback: AsyncCallback): Promise<void> {
+  public async lock(callback: Callback): Promise<void> {
     return new Promise((resolve, reject) => {
       this._queue.push(async () => {
         try {
